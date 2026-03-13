@@ -1,10 +1,12 @@
+import logo from '../../assets/logo_casa_sorteos.png'
+
 const Login = () => {
     return (
         <>
             <div className="">
                 <div className="d-flex justify-content-center mt-2">
                     <img style={{ width: "10em" }}
-                        src="/assets/logo_casa_sorteos-SRodr70H.png" alt="" />
+                        src={logo} alt="" />
                 </div>
                 <div className="container border mt-5">
                     <form className="row justify-content-center">
@@ -19,7 +21,7 @@ const Login = () => {
                                     className="form-control" id="password" placeholder="Contraseña" />
                             </div>
                             <div className="d-flex justify-content-center mb-5">
-                                <button type="submit">Login</button>
+                                <button className="btn btn-general" type="submit">Login</button>
                             </div>
                         </div>
                     </form>

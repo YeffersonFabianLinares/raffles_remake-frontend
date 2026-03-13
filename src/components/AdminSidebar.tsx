@@ -58,7 +58,7 @@ const AdminSidebar: React.FC = () => {
 
                 <AppBar
                     position="fixed"
-                    className='bg-info'
+                    className='bg-general'
                     sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                     <Toolbar>
                         <IconButton
@@ -70,7 +70,7 @@ const AdminSidebar: React.FC = () => {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" noWrap component="div">
-                            Clínica el Lago
+                            CASASORTEOS
                         </Typography>
                     </Toolbar>
                 </AppBar>

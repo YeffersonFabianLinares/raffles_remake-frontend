@@ -1,0 +1,14 @@
+.btn-general {
+    background-color: #1f4aa2;
+    border: 1px solid #1f4aa2;
+    color: white;
+}
+
+.bg-general {
+    background-color: #1f4aa2;
+}
+
+thead > tr > th {
+    color: white !important;
+    font-weight: bold;
+}

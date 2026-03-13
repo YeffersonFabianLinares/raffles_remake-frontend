@@ -8,7 +8,7 @@ interface CustomerFilters {
 
 export const datatable = async (data: CustomerFilters) => {
     try {
-        const response = await api.get('customers-list', { params: data });
+        const response = await api.get('sellers-list', { params: data });
         return response.data;
     }
     catch (error) {
