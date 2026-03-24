@@ -94,7 +94,7 @@ export const CustomerForm: React.FC<GenericFormProps> = ({ id, onSuccess }) => {
                                 <>
                                     <Select2
                                         {...field}
-                                        endPoint="/cities-select"
+                                        endPoint="cities/select"
                                         label="Selecciona una ciudad"
                                         onChange={(selected: ISelect2) => {
                                             field.onChange(selected)

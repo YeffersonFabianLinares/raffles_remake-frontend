@@ -8,7 +8,7 @@ interface CustomerFilters {
 
 export const datatable = async (data: CustomerFilters) => {
     try {
-        const response = await api.get('customers-list', { params: data });
+        const response = await api.get('customers', { params: data });
         return response.data;
     }
     catch (error) {
@@ -23,7 +23,7 @@ export const store = async (data: CustomerSchema) => {
         city_id: extractValue(data.city_id)
     }
     try {
-        const response = await api.post('customers-store', form);
+        const response = await api.post('customers/create', form);
         return response.data;
     }
     catch (error) {
@@ -38,7 +38,7 @@ export const update = async (data: CustomerSchema, id: number) => {
         city_id: extractValue(data.city_id)
     }
     try {
-        const response = await api.put(`customers-update/${id}`, form);
+        const response = await api.put(`customers/update/${id}`, form);
         return response.data;
     }
     catch (error) {

@@ -2,19 +2,25 @@ import { Route, Routes } from "react-router-dom"
 import Login from "./app/auth/Login"
 import AdminSidebar from "./components/AdminSidebar"
 import Customers from "./app/admin/customer/Customers"
-import TicketFree from "./app/admin/ticket/TicketFree"
 import Sellers from "./app/admin/sellers/Sellers"
+import SellerTracking from "./app/admin/sellers/SellerTracking"
+import SellerTickets from "./app/admin/sellers/SellerTickets"
+import Raffles from "./app/admin/raffle/Raffles"
+import TicketList from "./app/admin/ticket/TicketList"
+import Promotions from "./app/admin/promotion/Promotions"
 
 const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/admin" element={<Login />} />
             <Route element={<AdminSidebar />}>
-                <Route path="customers" element={<Customers />}></Route>
-                <Route path="sellers" element={<Sellers />}></Route>
-                <Route path="tickets">
-                    <Route path="Libre" element={<TicketFree />} />
-                </Route>
+                <Route path="customers" element={<Customers />} />
+                <Route path="sellers" element={<Sellers />} />
+                <Route path="sellers/:id/tracking" element={<SellerTracking />} />
+                <Route path="sellers/:id/tickets" element={<SellerTickets />} />
+                <Route path="raffles" element={<Raffles />} />
+                <Route path="tickets" element={<TicketList />} />
+                <Route path="promotions" element={<Promotions />} />
             </Route>
         </Routes>
     )

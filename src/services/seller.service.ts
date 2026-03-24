@@ -1,59 +1,54 @@
 import api from "../plugin/api";
-import type { CustomerSchema } from "../schemas/admin/customer.schema";
-import { extractValue } from "../utils/helpers";
+import type { SellerSchema } from "../schemas/admin/seller.schema";
 
-interface CustomerFilters {
-    name: string
+interface SellerFilters {
+    name?: string;
+    document_number?: string;
+    email?: string;
+    page?: number;
 }
 
-export const datatable = async (data: CustomerFilters) => {
-    try {
-        const response = await api.get('sellers-list', { params: data });
-        return response.data;
-    }
-    catch (error) {
-        console.error('Error fetching customers:', error);
-        throw error;
-    }
-}
+export const datatable = async (data: SellerFilters) => {
+    const response = await api.get('sellers', { params: data });
+    return response.data;
+};
 
-export const store = async (data: CustomerSchema) => {
-    const form = {
-        ...data,
-        city_id: extractValue(data.city_id)
-    }
-    try {
-        const response = await api.post('customers-store', form);
-        return response.data;
-    }
-    catch (error) {
-        console.error('Error creating customer:', error);
-        throw error;
-    }
-}
+export const store = async (data: SellerSchema) => {
+    const response = await api.post('sellers/register', data);
+    return response.data;
+};
 
-export const update = async (data: CustomerSchema, id: number) => {
-    const form = {
-        ...data,
-        city_id: extractValue(data.city_id)
-    }
-    try {
-        const response = await api.put(`customers-update/${id}`, form);
-        return response.data;
-    }
-    catch (error) {
-        console.error(`Error updating customer with ID ${id}:`, error);
-        throw error;
-    }
-}
+export const update = async (data: Partial<SellerSchema>, id: number) => {
+    const response = await api.put(`sellers/update/${id}`, data);
+    return response.data;
+};
 
 export const show = async (id: number) => {
-    try {
-        const response = await api.get(`customers/${id}`);
-        return response.data;
-    }
-    catch (error) {
-        console.error(`Error fetching customer with ID ${id}:`, error);
-        throw error;
-    }
-}
+    const response = await api.get(`sellers/${id}`);
+    return response.data;
+};
+
+export const destroy = async (id: number) => {
+    const response = await api.delete(`sellers/delete/${id}`);
+    return response.data;
+};
+
+export const updateStatus = async (id: number, state: number) => {
+    const response = await api.put(`sellers/update-status/${id}`, { state });
+    return response.data;
+};
+
+export const office = async () => {
+    const response = await api.get('sellers/office');
+    return response.data;
+};
+
+export const byUserId = async (userId: number) => {
+    const response = await api.get(`sellers/by-user/${userId}`);
+    return response.data;
+};
+
+export const tracking = async (id: number) => {
+    const response = await api.get(`sellers/${id}/tracking`);
+    return response.data;
+};
