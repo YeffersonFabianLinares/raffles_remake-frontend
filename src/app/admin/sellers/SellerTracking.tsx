@@ -26,12 +26,15 @@ const SellerTracking = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        if (!id) return
-        setLoading(true)
-        tracking(Number(id))
-            .then(setRecords)
-            .catch(console.error)
-            .finally(() => setLoading(false))
+        const trackingFn = async() => {
+            if (!id) return
+            setLoading(true)
+            tracking(Number(id))
+                .then(setRecords)
+                .catch(console.error)
+                .finally(() => setLoading(false))
+        }
+        trackingFn()
     }, [id])
 
     return (
