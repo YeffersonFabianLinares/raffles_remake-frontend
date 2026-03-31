@@ -36,7 +36,11 @@ interface Deps {
 
 const STATUS_OPTIONS = ['Libre', 'Reservado', 'Pagado', 'En línea']
 
-const TicketList = () => {
+interface TicketListProps {
+    defaultStatus?: string
+}
+
+const TicketList = ({ defaultStatus = '' }: TicketListProps) => {
     const [deps, setDeps] = useState<Deps>({ raffles: [], sellers: [] })
 
     useEffect(() => {
@@ -54,7 +58,7 @@ const TicketList = () => {
         handleChange,
         handleFilter,
     } = usePaginator<Ticket, TicketFilters>(datatable, {
-        name: '', document: '', number: '', status: '',
+        name: '', document: '', number: '', status: defaultStatus,
         seller_id: '', raffle_id: '', initial_date: '', final_date: ''
     })
 

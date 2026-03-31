@@ -7,6 +7,7 @@ import SellerTracking from "./app/admin/sellers/SellerTracking"
 import SellerTickets from "./app/admin/sellers/SellerTickets"
 import Raffles from "./app/admin/raffle/Raffles"
 import TicketList from "./app/admin/ticket/TicketList"
+import TicketFree from "./app/admin/ticket/TicketFree"
 import Promotions from "./app/admin/promotion/Promotions"
 
 const AppRoutes = () => {
@@ -20,6 +21,11 @@ const AppRoutes = () => {
                 <Route path="sellers/:id/tickets" element={<SellerTickets />} />
                 <Route path="raffles" element={<Raffles />} />
                 <Route path="tickets" element={<TicketList />} />
+                <Route path="tickets/en-linea" element={<TicketList defaultStatus="En línea" />} />
+                <Route path="tickets/pagadas" element={<TicketList defaultStatus="Pagado" />} />
+                <Route path="tickets/con-abono" element={<TicketList defaultStatus="Reservado" />} />
+                <Route path="tickets/sin-abono" element={<TicketList defaultStatus="Reservado" />} />
+                <Route path="tickets/disponibles" element={<TicketFree />} />
                 <Route path="promotions" element={<Promotions />} />
             </Route>
         </Routes>
