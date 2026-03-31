@@ -21,7 +21,7 @@ const Login = () => {
     try {
       const data = await login({ email, password });
       saveSession(data.token, data.user);
-      navigate("/customers");
+      navigate("/home");
     } catch {
       setError("Credenciales inválidas. Verifica tu correo y contraseña.");
     } finally {

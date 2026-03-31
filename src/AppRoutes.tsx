@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import Login from "./app/auth/Login"
 import AdminSidebar from "./components/AdminSidebar"
+import Home from "./app/admin/home/Home"
 import Customers from "./app/admin/customer/Customers"
 import Sellers from "./app/admin/sellers/Sellers"
 import SellerTracking from "./app/admin/sellers/SellerTracking"
@@ -15,6 +16,7 @@ const AppRoutes = () => {
         <Routes>
             <Route path="/admin" element={<Login />} />
             <Route element={<AdminSidebar />}>
+                <Route path="home" element={<Home />} />
                 <Route path="customers" element={<Customers />} />
                 <Route path="sellers" element={<Sellers />} />
                 <Route path="sellers/:id/tracking" element={<SellerTracking />} />

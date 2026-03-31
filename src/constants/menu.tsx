@@ -1,5 +1,5 @@
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import HomeIcon from '@mui/icons-material/Home';
 import PeopleIcon from '@mui/icons-material/People';
 import FolderIcon from '@mui/icons-material/Folder';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
@@ -8,6 +8,7 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import type { MenuItem } from "../interfaces/MenuItem";
 
 export const Menu: MenuItem[] = [
+    { text: 'Inicio', icon: <HomeIcon />, path: '/home' },
     { text: 'Clientes', icon: <PeopleIcon />, path: '/customers' },
     { text: 'Rifas', icon: <FolderIcon />, path: '/raffles' },
     {
