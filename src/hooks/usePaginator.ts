@@ -110,6 +110,14 @@ export function usePaginator<T, F>(
         fetchData(filters, page); // Recarga con los filtros y página actuales
     };
 
+    /** Aplica nuevos filtros parciales y dispara la búsqueda desde página 1. */
+    const applyFilters = (newFilters: Partial<F>) => {
+        const updated = { ...filters, ...newFilters };
+        setFilters(updated);
+        setPage(1);
+        fetchData(updated, 1);
+    };
+
         /**
      * Actualiza un único campo de un item en el estado local sin necesidad de refrescar la API.
      * Ideal para acciones rápidas como activar/desactivar un usuario.
@@ -138,6 +146,7 @@ export function usePaginator<T, F>(
         refresh,
         handleChange,
         handleFilter,
+        applyFilters,
         updateLocalItem
     };
 }

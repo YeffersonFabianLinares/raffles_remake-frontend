@@ -21,10 +21,6 @@ const AppRoutes = () => {
                 <Route path="sellers/:id/tickets" element={<SellerTickets />} />
                 <Route path="raffles" element={<Raffles />} />
                 <Route path="tickets" element={<TicketList />} />
-                <Route path="tickets/en-linea" element={<TicketList defaultStatus="En línea" />} />
-                <Route path="tickets/pagadas" element={<TicketList defaultStatus="Pagado" />} />
-                <Route path="tickets/con-abono" element={<TicketList defaultStatus="Reservado" />} />
-                <Route path="tickets/sin-abono" element={<TicketList defaultStatus="Reservado" />} />
                 <Route path="tickets/disponibles" element={<TicketFree />} />
                 <Route path="promotions" element={<Promotions />} />
             </Route>

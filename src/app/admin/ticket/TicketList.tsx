@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { useSearchParams } from "react-router-dom"
 import { Dialog, DialogContent, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import { usePaginator } from "../../../hooks/usePaginator"
 import type { Ticket } from "../../../schemas/admin/ticket.schema"
@@ -36,11 +37,10 @@ interface Deps {
 
 const STATUS_OPTIONS = ['Libre', 'Reservado', 'Pagado', 'En línea']
 
-interface TicketListProps {
-    defaultStatus?: string
-}
+const TicketList = () => {
+    const [searchParams, setSearchParams] = useSearchParams()
+    const statusFromUrl = searchParams.get('status') || ''
 
-const TicketList = ({ defaultStatus = '' }: TicketListProps) => {
     const [deps, setDeps] = useState<Deps>({ raffles: [], sellers: [] })
 
     useEffect(() => {
@@ -57,10 +57,36 @@ const TicketList = ({ defaultStatus = '' }: TicketListProps) => {
         filters,
         handleChange,
         handleFilter,
+        applyFilters,
     } = usePaginator<Ticket, TicketFilters>(datatable, {
-        name: '', document: '', number: '', status: defaultStatus,
+        name: '', document: '', number: '', status: statusFromUrl,
         seller_id: '', raffle_id: '', initial_date: '', final_date: ''
     })
+
+    // Referencia para evitar loops al sincronizar URL ↔ filtro
+    const prevStatusRef = useRef(statusFromUrl)
+
+    // Cuando el menú cambia la URL → actualiza el filtro y dispara fetch
+    useEffect(() => {
+        const urlStatus = searchParams.get('status') || ''
+        if (urlStatus !== prevStatusRef.current) {
+            prevStatusRef.current = urlStatus
+            applyFilters({ status: urlStatus })
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams])
+
+    // Cuando el usuario cambia el estado en el select → actualiza la URL (el menú se resalta)
+    const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        handleChange(e)
+        const status = e.target.value
+        prevStatusRef.current = status
+        if (status) {
+            setSearchParams({ status }, { replace: true })
+        } else {
+            setSearchParams({}, { replace: true })
+        }
+    }
 
     const { open, title, id, handleOpen, handleClose } = useDialogHandler({
         create: "Crear Boleta",
@@ -136,7 +162,7 @@ const TicketList = ({ defaultStatus = '' }: TicketListProps) => {
                     <input className="form-control" placeholder="# Boleta" name="number" value={filters.number} onChange={handleChange} />
                 </div>
                 <div className="col-md-2">
-                    <select className="form-select" name="status" value={filters.status} onChange={handleChange}>
+                    <select className="form-select" name="status" value={filters.status} onChange={handleStatusChange}>
                         <option value="">Todos los estados</option>
                         {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>

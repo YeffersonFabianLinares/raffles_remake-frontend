@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -27,6 +27,7 @@ const AdminSidebar: React.FC = () => {
     const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({})
     const navigate = useNavigate();
     const location = useLocation();
+    const [searchParams] = useSearchParams();
 
     const handleSubMenuClick = (text: string) => {
         setOpenMenus((prev) => ({ ...prev, [text]: !prev[text] }))
@@ -44,12 +45,24 @@ const AdminSidebar: React.FC = () => {
         setOpen(false);
     };
 
-    const handleNavigation = (path: string | undefined) => {
-        setOpen(false)
-        if (path) navigate(path)
-        if (window.innerWidth < 600) {
-            setOpen(false);
+    const isItemActive = (item: MenuItem): boolean => {
+        if (!item.path) return false;
+        if (item.statusFilter !== undefined) {
+            return location.pathname === item.path &&
+                (searchParams.get('status') || '') === item.statusFilter;
         }
+        return location.pathname === item.path;
+    };
+
+    const handleNavigation = (item: MenuItem) => {
+        setOpen(false);
+        if (!item.path) return;
+        if (item.statusFilter !== undefined) {
+            navigate(item.statusFilter ? `${item.path}?status=${encodeURIComponent(item.statusFilter)}` : item.path);
+        } else {
+            navigate(item.path);
+        }
+        if (window.innerWidth < 600) setOpen(false);
     };
 
     return (
@@ -114,26 +127,24 @@ const AdminSidebar: React.FC = () => {
 
                                                 <Collapse in={openMenus[item.text]} timeout="auto" unmountOnExit>
                                                     <List component="div" disablePadding>
-                                                        {
-                                                            item.children.map((child) => (
-                                                                <ListItemButton
-                                                                    key={child.text}
-                                                                    sx={{ pl: 4 }}
-                                                                    onClick={() => handleNavigation(child.path)}
-                                                                    selected={location.pathname == child.path}
-                                                                >
-                                                                    <ListItemIcon>{child.icon}</ListItemIcon>
-                                                                    <ListItemText primary={child.text} />
-                                                                </ListItemButton>
-                                                            ))
-                                                        }
+                                                        {item.children.map((child) => (
+                                                            <ListItemButton
+                                                                key={child.text}
+                                                                sx={{ pl: 4 }}
+                                                                onClick={() => handleNavigation(child)}
+                                                                selected={isItemActive(child)}
+                                                            >
+                                                                <ListItemIcon>{child.icon}</ListItemIcon>
+                                                                <ListItemText primary={child.text} />
+                                                            </ListItemButton>
+                                                        ))}
                                                     </List>
                                                 </Collapse>
                                             </>
                                         ) : (
                                             <ListItemButton
-                                                onClick={() => handleNavigation(item.path!)}
-                                                selected={location.pathname === item.path}
+                                                onClick={() => handleNavigation(item)}
+                                                selected={isItemActive(item)}
                                             >
                                                 <ListItemIcon>{item.icon}</ListItemIcon>
                                                 <ListItemText primary={item.text} />

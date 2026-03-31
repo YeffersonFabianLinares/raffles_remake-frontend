@@ -14,11 +14,11 @@ export const Menu: MenuItem[] = [
         text: 'Boletas',
         icon: <ConfirmationNumberIcon />,
         children: [
-            { text: 'Lista de Boletas', icon: <ConfirmationNumberIcon />, path: '/tickets' },
-            { text: 'En Línea', icon: <ConfirmationNumberIcon />, path: '/tickets/en-linea' },
-            { text: 'Pagadas', icon: <ConfirmationNumberIcon />, path: '/tickets/pagadas' },
-            { text: 'Con Abono', icon: <ConfirmationNumberIcon />, path: '/tickets/con-abono' },
-            { text: 'Sin Abono', icon: <ConfirmationNumberIcon />, path: '/tickets/sin-abono' },
+            { text: 'Lista de Boletas', icon: <ConfirmationNumberIcon />, path: '/tickets', statusFilter: '' },
+            { text: 'En Línea', icon: <ConfirmationNumberIcon />, path: '/tickets', statusFilter: 'En línea' },
+            { text: 'Pagadas', icon: <ConfirmationNumberIcon />, path: '/tickets', statusFilter: 'Pagado' },
+            { text: 'Con Abono', icon: <ConfirmationNumberIcon />, path: '/tickets', statusFilter: 'Reservado' },
+            { text: 'Sin Abono', icon: <ConfirmationNumberIcon />, path: '/tickets', statusFilter: 'Sin abono' },
             { text: 'Disponibles', icon: <ConfirmationNumberIcon />, path: '/tickets/disponibles' },
         ]
     },
